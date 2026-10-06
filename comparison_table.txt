@@ -1,0 +1,37 @@
+COMPARISON TABLE - EXPRESSION TREE ASSIGNMENT
+
+| Feature | Stack-Based Postfix Evaluation | Expression Tree Evaluation |
+|---------|--------------------------------|----------------------------|
+| Main data structure | Stack | Binary Expression Tree |
+| Input form | Postfix expression | Postfix expression used to build tree |
+| Evaluation method | Scan tokens and use stack | Recursively evaluate tree |
+| Time complexity | O(n) | O(n) |
+| Space complexity | O(n) worst case | O(h) recursion after tree construction; tree itself O(n) |
+| Preserves expression structure | No | Yes |
+| Traversal support | No | Preorder, inorder, postorder |
+| Implementation | Simple | More complex |
+| Best suited for | Direct evaluation | Evaluation plus expression analysis |
+
+OPERATIONS COMPARISON
+
+Postfix evaluation:
+1. Read operand.
+2. Push operand onto stack.
+3. Read operator.
+4. Pop two operands.
+5. Apply operator.
+6. Push the result.
+7. Repeat until the expression ends.
+
+Expression tree evaluation:
+1. Build a binary expression tree from postfix.
+2. Operators become internal nodes.
+3. Operands become leaf nodes.
+4. Recursively evaluate the left subtree.
+5. Recursively evaluate the right subtree.
+6. Apply the operator at the current node.
+
+CONCLUSION FROM COMPARISON
+
+If the requirement is only to calculate the result, stack-based postfix evaluation is the most suitable because it is simple and uses O(n) time.
+If the requirement includes displaying or analyzing the structure of the expression, the expression tree is more suitable because it preserves operand-operator relationships and supports multiple traversals.
