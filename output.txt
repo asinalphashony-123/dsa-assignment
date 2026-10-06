@@ -1,0 +1,62 @@
+Expression Tree and Evaluation
+Postfix Expression: 8 3 2 * + 6 2 / -
+
+Expression Tree:
+-
+    L-- +
+        L-- 8
+        R-- *
+            L-- 3
+            R-- 2
+    R-- /
+        L-- 6
+        R-- 2
+
+Traversals:
+Preorder  : - + 8 * 3 2 / 6 2
+Inorder   : 8 + 3 * 2 - 6 / 2
+Postorder : 8 3 2 * + 6 2 / -
+
+Stack-based postfix evaluation trace:
+Read 8 -> push 8
+Read 3 -> push 3
+Read 2 -> push 2
+Read * -> 3 * 2 = 6 -> push 6
+Read + -> 8 + 6 = 14 -> push 14
+Read 6 -> push 6
+Read 2 -> push 2
+Read / -> 6 / 2 = 3 -> push 3
+Read - -> 14 - 3 = 11 -> push 11
+Postfix evaluation result: 11
+
+Expression Tree evaluation trace:
+Tree evaluation: 3 * 2 = 6
+Tree evaluation: 8 + 6 = 14
+Tree evaluation: 6 / 2 = 3
+Tree evaluation: 14 - 3 = 11
+Expression Tree evaluation result: 11
+
+Comparison:
+1. Number of operations:
+   Both approaches process each operand/operator once during evaluation, so evaluation is O(n).
+   Expression Tree evaluation additionally requires O(n) tree construction.
+
+2. Data structure used:
+   Postfix evaluation uses a stack.
+   Expression Tree evaluation uses a binary tree and recursion.
+
+3. Time complexity:
+   Postfix evaluation: O(n).
+   Expression Tree construction: O(n).
+   Expression Tree evaluation: O(n).
+
+4. Space requirements:
+   Postfix evaluation: O(n) worst-case stack space.
+   Expression Tree: O(n) for tree nodes plus O(h) recursion stack.
+
+5. Structural information:
+   Postfix evaluation mainly produces the final numerical result.
+   The Expression Tree preserves the complete operand-operator relationships, subexpressions,
+   and order of operations. It can also generate prefix, infix, and postfix expressions.
+
+Final result: 11
