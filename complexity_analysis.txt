@@ -1,0 +1,36 @@
+COMPLEXITY ANALYSIS - EXPRESSION TREE ASSIGNMENT
+
+Input:
+8 3 2 * + 6 2 / -
+
+1. Expression Tree Construction
+The postfix expression is scanned once and every operand/operator is processed once.
+
+Time Complexity: O(n)
+Space Complexity: O(n)
+
+2. Stack-Based Postfix Evaluation
+Each operand is pushed once and each operator is processed once.
+
+Time Complexity: O(n)
+Space Complexity: O(n) in the worst case
+
+3. Expression Tree Evaluation
+Every node in the expression tree is visited once during recursive evaluation.
+
+Time Complexity: O(n)
+Space Complexity: O(h) for the recursive call stack, where h is the tree height.
+In the worst case, h can be O(n).
+
+4. Traversal
+Preorder, inorder, and postorder traversals visit every tree node once.
+
+Time Complexity for each traversal: O(n)
+Auxiliary recursive stack space: O(h)
+
+5. Overall Comparison
+Both evaluation methods have O(n) time complexity.
+Postfix evaluation uses a stack directly and is simple and efficient for obtaining the final value.
+Expression tree evaluation may require more structural storage, but it preserves the complete relationship between operands and operators.
+
+For this assignment, stack-based postfix evaluation is the most suitable approach when only the final value is required. The expression tree is more suitable when the structure of the expression and different traversals are required.
