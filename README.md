@@ -1,110 +1,112 @@
-# Expression Tree Evaluation
+# Expression Tree and Postfix Evaluation
 
-## Problem
+## Assignment Question
 
 Consider the postfix expression:
 
-8 3 2 * + 6 2 / -
+`8 3 2 * + 6 2 / -`
 
-The program builds an Expression Tree, displays the tree and traversals, evaluates the expression using both stack-based postfix evaluation and Expression Tree evaluation, and compares the two approaches.
+### (a) Implement an Expression Tree using the postfix expression. Display the tree and its traversal results.
 
-## Expression Tree
+The expression represented is:
 
-The expression is equivalent to:
+`(8 + (3 * 2)) - (6 / 2)`
 
-8 + (3 * 2) - (6 / 2)
+**Expression Tree:**
 
-Tree structure:
+```text
+             -
+           /   \
+          +     /
+         / \   / \
+        8   * 6   2
+           / \
+          3   2
+```
 
--
-|-- +
-|   |-- 8
-|   |-- *
-|       |-- 3
-|       |-- 2
-|-- /
-    |-- 6
-    |-- 2
+**Traversal results**
 
-## Traversals
+- **Preorder (Root, Left, Right):** `- + 8 * 3 2 / 6 2`
+- **Inorder (Left, Root, Right):** `((8+(3*2))-(6/2))`
+- **Postorder (Left, Right, Root):** `8 3 2 * + 6 2 / -`
 
-Preorder: - + 8 * 3 2 / 6 2
+### (b) Evaluate the expression using stack-based postfix evaluation and Expression Tree evaluation. Prepare a trace showing the important intermediate operations.
 
-Inorder: 8 + 3 * 2 - 6 / 2
+#### 1. Stack-Based Postfix Evaluation
 
-Postorder: 8 3 2 * + 6 2 / -
+| Step | Token | Operation | Stack after operation |
+|---:|:---:|---|---|
+| 1 | 8 | Push 8 | [8] |
+| 2 | 3 | Push 3 | [8, 3] |
+| 3 | 2 | Push 2 | [8, 3, 2] |
+| 4 | * | 3 × 2 = 6 | [8, 6] |
+| 5 | + | 8 + 6 = 14 | [14] |
+| 6 | 6 | Push 6 | [14, 6] |
+| 7 | 2 | Push 2 | [14, 6, 2] |
+| 8 | / | 6 ÷ 2 = 3 | [14, 3] |
+| 9 | - | 14 − 3 = 11 | [11] |
 
-## Evaluation
+**Final result = 11**
 
-### Stack-based postfix evaluation
+#### 2. Expression Tree Evaluation
 
-The expression is scanned from left to right. Operands are pushed onto a stack. When an operator is found, the required operands are popped, the operation is performed, and the result is pushed back.
+Evaluation is performed from the leaf nodes upward.
 
-Important operations:
+| Step | Sub-expression | Operation | Result |
+|---:|---|---|---:|
+| 1 | 3 * 2 | 3 × 2 | 6 |
+| 2 | 8 + (3 * 2) | 8 + 6 | 14 |
+| 3 | 6 / 2 | 6 ÷ 2 | 3 |
+| 4 | (8 + 6) - 3 | 14 − 3 | 11 |
 
-1. 3 * 2 = 6
-2. 8 + 6 = 14
-3. 6 / 2 = 3
-4. 14 - 3 = 11
+**Final result = 11**
 
-Final result: 11
+Both methods produce the same result: **11**.
 
-### Expression Tree evaluation
+### (c) Compare the approaches and explain the structural information provided by an Expression Tree.
 
-The tree is evaluated recursively from the leaves upward:
-
-1. 3 * 2 = 6
-2. 8 + 6 = 14
-3. 6 / 2 = 3
-4. 14 - 3 = 11
-
-Final result: 11
-
-## Comparison
-
-| Feature | Postfix Evaluation | Expression Tree |
+| Criterion | Stack-Based Postfix Evaluation | Expression Tree Evaluation |
 |---|---|---|
-| Data structure | Stack | Binary tree |
-| Evaluation time | O(n) | O(n) |
-| Construction | Not required | O(n) |
-| Space | O(n) worst case | O(n) tree + O(h) recursion |
-| Main output | Numerical result | Result plus structure |
-| Traversals | Not stored | Prefix, infix, postfix |
-| Modification | Less convenient | Convenient |
+| Number of arithmetic operations | 4 | 4 |
+| Data structure | Stack | Binary tree and recursion stack |
+| Time complexity | O(n) | O(n) for evaluation; O(n) additional to build the tree |
+| Space requirements | O(n) worst case for the stack | O(n) for the tree; O(h) recursion space during evaluation |
+| Main advantage | Simple direct evaluation | Preserves the structure of the expression |
 
-## Structural Information
+Here, **n** is the number of tokens/nodes and **h** is the height of the tree.
 
-Direct postfix evaluation mainly calculates the final value and does not retain the complete expression structure after evaluation.
+#### Why does the Expression Tree provide additional structural information?
 
-The Expression Tree stores every operand-operator relationship as parent-child links. Therefore, it shows the order of operations and individual subexpressions. It can also be traversed to produce prefix, infix, and postfix forms.
+Direct postfix evaluation uses a stack to calculate the answer. It does not retain the complete expression hierarchy after the evaluation.
 
-This makes Expression Trees useful for expression analysis, modification, and further processing.
+An Expression Tree preserves the operator-operand relationships:
+
+- `3 * 2` is a sub-expression.
+- `8 + (3 * 2)` is another sub-expression.
+- `6 / 2` is another sub-expression.
+- The subtraction operator combines the results of the two main sub-expressions.
+
+The tree also supports preorder, inorder, and postorder traversals. Therefore, it is useful for understanding, displaying, and analysing the expression, while stack-based postfix evaluation is simpler when only the final result is needed.
 
 ## Files
 
-- expression_tree.c: C implementation
-- input.txt: given postfix expression
-- output.txt: expected output and trace
-- README.md: documentation
+- `main.c` — C source code for tree construction, traversals, both evaluation methods, and comparison.
+- `Makefile` — GCC build and run commands.
+- `README.md` — Assignment answers, trace tables, comparison, and complexity analysis.
 
 ## Compile and Run
 
-Using GCC:
+With GCC and Make installed, run:
 
-gcc expression_tree.c -o expression_tree
-
+```bash
+make
 ./expression_tree
+```
 
-On Windows:
+On Windows, run the generated executable as `expression_tree.exe`. If Make is unavailable, compile directly:
 
-gcc expression_tree.c -o expression_tree.exe
+```bash
+gcc -std=c11 -Wall -Wextra main.c -o expression_tree
+```
 
-expression_tree.exe
-
-Make sure input.txt is in the same folder.
-
-## Expected Result
-
-Postfix evaluation result: 11
-
-Expression Tree evaluation result: 11
+The program uses the given expression directly in `main.c`.
